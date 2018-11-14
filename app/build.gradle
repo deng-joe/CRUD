@@ -54,6 +54,6 @@ dependencies {
     implementation "androidx.paging:paging-runtime:2.0.0"
 
     // Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.27.0-eap13"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.27.0-eap13"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1"
 }
