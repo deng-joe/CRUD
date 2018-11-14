@@ -36,9 +36,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
-    // Lifestyle components; ViewModel and LiveData
+    // Lifecycle components; ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
-    kapt "android.arch.lifecycle:compiler:2.0.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
 
     // Test helpers for LiveData
     testImplementation "androidx.arch.core:core-testing:2.0.0"
