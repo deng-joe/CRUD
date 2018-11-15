@@ -11,9 +11,33 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:minHeight="?attr/actionBarSize"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/info_fields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/appBar"
             android:layout_margin="8dp"
             android:orientation="vertical">
 
@@ -21,28 +45,28 @@
                 android:id="@+id/id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Student number"
+                android:hint="@string/student_number"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/major"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Major"
+                android:hint="@string/major"
                 android:inputType="textCapWords" />
 
         </LinearLayout>
@@ -60,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="#228B22"
-                android:text="Save" />
+                android:text="@string/save" />
 
         </LinearLayout>
 

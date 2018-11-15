@@ -7,19 +7,28 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.widget.Toolbar
 import com.example.joey.crud.R
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : AppCompatActivity() {
+    private lateinit var idView: EditText
+    private lateinit var nameView: EditText
+    private lateinit var emailView: EditText
+    private lateinit var majorView: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
 
-        val idView: EditText = findViewById(R.id.id)
-        val nameView: EditText = findViewById(R.id.name)
-        val emailView: EditText = findViewById(R.id.email)
-        val majorView: EditText = findViewById(R.id.major)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        title = "Add User"
+
+        idView = findViewById(R.id.id)
+        nameView = findViewById(R.id.name)
+        emailView = findViewById(R.id.email)
+        majorView = findViewById(R.id.major)
 
         val button = findViewById<Button>(R.id.create)
         button.setOnClickListener {

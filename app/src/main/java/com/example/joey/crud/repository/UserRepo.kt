@@ -12,4 +12,19 @@ class UserRepo(private val userDao: UserDao) {
     fun insert(user: User) {
         userDao.insert(user)
     }
+
+    @WorkerThread
+    fun update(user: User) {
+        userDao.update(user)
+    }
+
+    @WorkerThread
+    fun delete(user: User) {
+        userDao.delete(user)
+    }
+
+    @WorkerThread
+    fun deleteAll() {
+        userDao.deleteAll()
+    }
 }

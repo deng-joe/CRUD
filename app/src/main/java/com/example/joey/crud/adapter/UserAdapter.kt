@@ -13,7 +13,7 @@ class UserAdapter internal constructor(context: Context): RecyclerView.Adapter<U
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var users = emptyList<User>()   // Cached copy of users
 
-    inner class UserViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userId: TextView = itemView.findViewById(R.id.id)
         val userName: TextView = itemView.findViewById(R.id.name)
         val userEmail: TextView = itemView.findViewById(R.id.email)
@@ -38,5 +38,9 @@ class UserAdapter internal constructor(context: Context): RecyclerView.Adapter<U
     internal fun setUsers(users: List<User>) {
         this.users = users
         notifyDataSetChanged()
+    }
+
+    fun swipeToDelete(position: Int): User {
+        return users[position]
     }
 }

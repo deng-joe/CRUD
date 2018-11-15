@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CRUD</string>
+    <string name="student_number">Student number</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="major">Major</string>
+    <string name="save">Save</string>
+    <string name="delete_all">Delete all</string>
 </resources>
