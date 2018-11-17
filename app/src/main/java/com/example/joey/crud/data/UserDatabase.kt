@@ -10,9 +10,10 @@ abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     companion object {
+        @Volatile
         private var INSTANCE: UserDatabase? = null
 
-        fun getUserDatabase(context: Context): UserDatabase {
+        fun getInstance(context: Context): UserDatabase {
             val temp = INSTANCE
             if (temp != null) {
                 return temp
@@ -23,7 +24,8 @@ abstract class UserDatabase : RoomDatabase() {
                     context.applicationContext,
                     UserDatabase::class.java,
                     "students_db"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = obj
                 return obj
             }

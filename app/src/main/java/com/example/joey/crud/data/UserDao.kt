@@ -2,15 +2,14 @@ package com.example.joey.crud.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import androidx.room.OnConflictStrategy.FAIL
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.*
 
 @Dao
 interface UserDao {
     @Insert(onConflict = REPLACE)
     fun insert(user: User)
 
-    @Update(onConflict = FAIL)
+    @Update(onConflict = ABORT)
     fun update(user: User)
 
     @Delete

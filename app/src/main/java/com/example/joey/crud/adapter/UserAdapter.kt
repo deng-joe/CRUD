@@ -12,12 +12,22 @@ import com.example.joey.crud.data.User
 class UserAdapter internal constructor(context: Context): RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var users = emptyList<User>()   // Cached copy of users
+    private lateinit var clickListener: OnItemClickListener
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userId: TextView = itemView.findViewById(R.id.id)
         val userName: TextView = itemView.findViewById(R.id.name)
         val userEmail: TextView = itemView.findViewById(R.id.email)
         val userMajor: TextView = itemView.findViewById(R.id.major)
+
+        init {
+            itemView.setOnClickListener {
+                val position: Int = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    clickListener.onItemClick(users[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -42,5 +52,15 @@ class UserAdapter internal constructor(context: Context): RecyclerView.Adapter<U
 
     fun swipeToDelete(position: Int): User {
         return users[position]
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(user: User) {
+
+        }
+    }
+
+    fun setOnItemClickListener(clickListener: OnItemClickListener) {
+        this.clickListener = clickListener
     }
 }

@@ -14,7 +14,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     val allUsers: LiveData<List<User>>  // Cache a copy of users
 
     init {
-        val usersDao = UserDatabase.getUserDatabase(application).userDao()
+        val usersDao = UserDatabase.getInstance(application).userDao()
         repo = UserRepo(usersDao)
         allUsers = repo.allUsers
     }
@@ -32,11 +32,11 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         repo.update(user)
     }
 
-    fun delete(user: User) = scope.launch(Dispatchers.Default) {
+    fun delete(user: User) = scope.launch(Dispatchers.IO) {
         repo.delete(user)
     }
 
-    fun deleteAll() = scope.launch(Dispatchers.Default) {
+    fun deleteAll() = scope.launch(Dispatchers.IO) {
         repo.deleteAll()
     }
 

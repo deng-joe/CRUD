@@ -35,9 +35,13 @@ class MainActivity : AppCompatActivity() {
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
             val intent = Intent(this@MainActivity, UserActivity::class.java)
-            startActivityForResult(intent, USER_ACTIVITY_REQUEST_CODE)
+            startActivityForResult(intent, ADD_USER_REQUEST_CODE)
         }
 
+        initUI()
+    }
+
+    private fun initUI() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val adapter = UserAdapter(this)
         recyclerView.adapter = adapter
@@ -52,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             users?.let { adapter.setUsers(it) }
         })
 
-        val simpleItemTouch = object : ItemTouchHelper.SimpleCallback(0,
+        val itemTouch = object : ItemTouchHelper.SimpleCallback(0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -67,8 +71,19 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "User deleted.", Toast.LENGTH_SHORT).show()
             }
         }
-        val itemTouchHelper = ItemTouchHelper(simpleItemTouch)
+        val itemTouchHelper = ItemTouchHelper(itemTouch)
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        adapter.setOnItemClickListener(object : UserAdapter.OnItemClickListener {
+            override fun onItemClick(user: User) {
+                val intent = Intent(this@MainActivity, UserActivity::class.java)
+                intent.putExtra(UserActivity.EXTRA_ID, user.id)
+                intent.putExtra(UserActivity.EXTRA_NAME, user.name)
+                intent.putExtra(UserActivity.EXTRA_EMAIL, user.email)
+                intent.putExtra(UserActivity.EXTRA_MAJOR, user.major)
+                startActivityForResult(intent, EDIT_USER_REQUEST_CODE)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         val id = item?.itemId
         if (id == R.id.del) {
             val builder = AlertDialog.Builder(this)
-            builder.setMessage("Are you really sure you want to delete all data?")
+            builder.setMessage("Are you really sure you want to delete all users?")
             builder.setPositiveButton("OK") { _, _ ->
                 userViewModel.deleteAll()
                 Toast.makeText(this, "All users deleted.", Toast.LENGTH_SHORT).show()
@@ -90,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                 dialog.cancel()
             }
             builder.show()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
@@ -97,21 +113,29 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == USER_ACTIVITY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        if (requestCode == ADD_USER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val user = User(
-                    "ID: " + it.getStringExtra("ID"), "Name: " + it.getStringExtra("Name"),
-                    "Email: " + it.getStringExtra("Email"), "Major: " + it.getStringExtra("Major")
+                    "ID: " + it.getStringExtra(UserActivity.EXTRA_ID), "Name: " + it.getStringExtra(UserActivity.EXTRA_NAME),
+                    "Email: " + it.getStringExtra(UserActivity.EXTRA_EMAIL), "Major: " + it.getStringExtra(UserActivity.EXTRA_MAJOR)
                 )
                 userViewModel.insert(user)
             }
             Toast.makeText(this, "User created successfully.", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Discarded, some fields empty.", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == EDIT_USER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.let {
+                val user = User(
+                    "ID: " + it.getStringExtra(UserActivity.EXTRA_ID), "Name: " + it.getStringExtra(UserActivity.EXTRA_NAME),
+                    "Email: " + it.getStringExtra(UserActivity.EXTRA_EMAIL), "Major: " + it.getStringExtra(UserActivity.EXTRA_MAJOR)
+                )
+                userViewModel.update(user)
+            }
+            Toast.makeText(this, "User updated successfully.", Toast.LENGTH_SHORT).show()
         }
     }
 
     companion object {
-        const val USER_ACTIVITY_REQUEST_CODE = 1
+        const val ADD_USER_REQUEST_CODE = 1
+        const val EDIT_USER_REQUEST_CODE = 2
     }
 }
