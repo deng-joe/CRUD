@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -129,12 +128,6 @@ class MainActivity : AppCompatActivity() {
                     it.getStringExtra(UserActivity.EXTRA_ID), it.getStringExtra(UserActivity.EXTRA_NAME), it.getStringExtra(UserActivity.EXTRA_EMAIL),
                     it.getStringExtra(UserActivity.EXTRA_MAJOR)
                 )
-
-                if (TextUtils.isEmpty(user.id) || TextUtils.isEmpty(user.name) || TextUtils.isEmpty(user.email) || TextUtils.isEmpty(user.major)) {
-                    Toast.makeText(this, "Please leave no field empty.", Toast.LENGTH_SHORT).show()
-                    return
-                }
-
                 userViewModel.update(user)
             }
             Toast.makeText(this, "User updated successfully.", Toast.LENGTH_SHORT).show()
