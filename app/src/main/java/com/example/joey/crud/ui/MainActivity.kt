@@ -116,8 +116,8 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == ADD_USER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val user = User(
-                    it.getStringExtra(UserActivity.EXTRA_ID), it.getStringExtra(UserActivity.EXTRA_NAME), it.getStringExtra(UserActivity.EXTRA_EMAIL),
-                    it.getStringExtra(UserActivity.EXTRA_MAJOR)
+                    it.getStringExtra(UserActivity.EXTRA_ID), it.getStringExtra(UserActivity.EXTRA_NAME),
+                    it.getStringExtra(UserActivity.EXTRA_EMAIL), it.getStringExtra(UserActivity.EXTRA_MAJOR)
                 )
                 userViewModel.insert(user)
             }
@@ -125,8 +125,8 @@ class MainActivity : AppCompatActivity() {
         } else if (requestCode == EDIT_USER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.let {
                 val user = User(
-                    it.getStringExtra(UserActivity.EXTRA_ID), it.getStringExtra(UserActivity.EXTRA_NAME), it.getStringExtra(UserActivity.EXTRA_EMAIL),
-                    it.getStringExtra(UserActivity.EXTRA_MAJOR)
+                    it.getStringExtra(UserActivity.EXTRA_ID), it.getStringExtra(UserActivity.EXTRA_NAME),
+                    it.getStringExtra(UserActivity.EXTRA_EMAIL), it.getStringExtra(UserActivity.EXTRA_MAJOR)
                 )
                 userViewModel.update(user)
             }
